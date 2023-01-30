@@ -16,9 +16,10 @@ router.use(express.json());
 router.use(bodyParser.json())
 /* GET users listing. */
 router.get('/', (req, res, next) => {
-  res.send("terve")
-  //res.render("register")
+  //res.send("terve")
+  res.render("register")
 });
+
 
 router.get('/private', validateToken, (req, res, next) => {
   
@@ -56,6 +57,7 @@ router.post('/user/login',
             (err, token)=>{
               if(err) throw err;
                return res.send({success: true,token: token})
+               
             }
           )
         }
@@ -93,6 +95,7 @@ router.post("/user/register",
             },(err,ok)=>{
               if(err) throw err;
               return res.send("ok")
+              //return res.redirect("login.html")
             }
           );
         });
