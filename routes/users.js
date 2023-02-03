@@ -68,7 +68,7 @@ router.post('/user/login',
 
 });
 
-//Register
+//Register /user/register
 router.post("/user/register",
   body("email").isEmail(),
   body("password").isStrongPassword(),
@@ -94,7 +94,7 @@ router.post("/user/register",
               password: hash
             },(err,ok)=>{
               if(err) throw err;
-              return res.send("ok")
+              return res.send(ok)
               //return res.redirect("login.html")
             }
           );
