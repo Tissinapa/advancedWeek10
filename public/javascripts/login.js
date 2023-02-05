@@ -24,15 +24,22 @@ function onSubmit(event){
     body: JSON.stringify({email: emailData.value, password: passwordData.value}),
 
   })
-    .then(response => response.text())
+    .then(response => response.json())
     .then((data) =>{
       if(data.token){
+        
         storeToken(data.token)
-        window.location.href="/";
+        window.location.href="/"
+;
   
-      }else {
-        console.log(data)
-        document.getElementById("error").innerHTML = data
+      }else{
+        if(data.message){
+          console.log(data.message)
+          document.getElementById("error").innerHTML = data.message
+        } else{
+          document.getElementById("error").innerHTML = "something went wrong"
+        }
+
       }
 
     }) 
@@ -40,4 +47,5 @@ function onSubmit(event){
 }
 function storeToken(token){
   localStorage.setItem("auth_token",token)
+  
 }

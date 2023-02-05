@@ -29,8 +29,8 @@ router.get('/private', validateToken, (req, res, next) => {
 
 //Login
 router.post('/user/login', 
-  body("email"),
-  body("password"),
+  body("email").trim(),
+  body("password").trim(),
 (req, res, next) => {
   User.findOne({email: req.body.email},(err, user)=>{
     if(err){
@@ -42,11 +42,9 @@ router.post('/user/login',
 
       bcrypt.compare(req.body.password, user.password,(err,match)=>{
         if(err){
-          throw err
-        }if(!match){
-          //res.send("Invalid credentials")
-          return res.send("Invalid credentials")
+          throw err       
         }if(match){
+          console.log("mätsi")
           const tokenPayload = {
             id: user._id,
             email: user.email
@@ -63,6 +61,8 @@ router.post('/user/login',
                
             }
           )
+        }else{
+          return res.json({message:"Invalid credentials"})
         }
       })
     }
