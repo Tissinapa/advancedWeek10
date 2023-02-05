@@ -29,6 +29,7 @@ function onSubmit(event){
       .then((data) => {
         if(data==="Password is not strong enough" || data==="Email already in use"){
           console.log(data)
+          document.getElementById("error").innerHTML = data
         }else {
           window.location.href="/login.html"
         }

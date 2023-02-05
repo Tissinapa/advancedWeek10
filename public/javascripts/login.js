@@ -32,6 +32,7 @@ function onSubmit(event){
   
       }else {
         console.log(data)
+        document.getElementById("error").innerHTML = data
       }
 
     }) 
