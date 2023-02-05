@@ -24,18 +24,14 @@ function onSubmit(event){
     body: JSON.stringify({email: emailData.value, password: passwordData.value}),
 
   })
-    .then(response => response.json())
+    .then(response => response.text())
     .then((data) =>{
       if(data.token){
         storeToken(data.token)
         window.location.href="/";
   
       }else {
-        if(data.message){
-          console.log(data.message)
-        }else{
-          console.log("strange error")
-        }
+        console.log(data)
       }
 
     }) 

@@ -25,8 +25,15 @@ function onSubmit(event){
       body: JSON.stringify({email: emailData.value, password: passwordData.value}),
 
     })
-      .then(response => response.json())
-      .then(data => 
-        window.location.href="/login.html")
-      .catch(error => console.log(error))
+      .then(response => response.text())
+      .then((data) => {
+        if(data==="Password is not strong enough" || data==="Email already in use"){
+          console.log(data)
+        }else {
+          window.location.href="/login.html"
+        }
+      
+      })
+        
+      //.catch(error => console.log(JSON.stringify(error)))
 }

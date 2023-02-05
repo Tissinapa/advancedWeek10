@@ -29,20 +29,23 @@ router.get('/private', validateToken, (req, res, next) => {
 
 //Login
 router.post('/user/login', 
-  body("email").trim(),
-  body("password").trim(),
+  body("email"),
+  body("password"),
 (req, res, next) => {
   User.findOne({email: req.body.email},(err, user)=>{
     if(err){
       throw err
     }
     if(!user){
-      return res.status(403).send("Indavalid credentials");
+      return res.send("Invalid credentials");
     } else {
 
       bcrypt.compare(req.body.password, user.password,(err,match)=>{
         if(err){
           throw err
+        }if(!match){
+          //res.send("Invalid credentials")
+          return res.send("Invalid credentials")
         }if(match){
           const tokenPayload = {
             id: user._id,
@@ -71,11 +74,14 @@ router.post('/user/login',
 //Register /user/register
 router.post("/user/register",
   body("email").isEmail(),
-  body("password").isStrongPassword(),
+  body("password")
+  .isStrongPassword()
+  .withMessage("Password is not strong enough"),
 (req, res, next) =>{
   const errors = validationResult(req)
   if(!errors.isEmpty()){
-    return res.status(400).json({errors: errors.array()})
+    //console.log(errors.errors[0].msg)
+    return res.send(errors.errors[0].msg)
   }
 
   User.findOne({email: req.body.email},(err, user) => {
@@ -83,7 +89,8 @@ router.post("/user/register",
       throw err;
     };  
     if(user){
-      return res.status(403).send("Email already in use");
+      //res.status(403).send("Email already in use");
+      return res.send("Email already in use");
     }else {
       bcrypt.genSalt(10,(err, salt)=>{
         bcrypt.hash(req.body.password, salt, (err, hash)=>{
