@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require("mongoose")
 var dotenv = require("dotenv")
+var Buffer = require("buffer")
 
 dotenv.config()
 mongoose.set('strictQuery', true)

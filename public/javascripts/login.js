@@ -1,3 +1,4 @@
+
 if (document.readyState !== "loading") {
     initializeCodeLogin();
   } else {
@@ -11,10 +12,9 @@ if (document.readyState !== "loading") {
 }
 function onSubmit(event){
   event.preventDefault()
-  
   const emailData = document.getElementById("emailId")
   const passwordData = document.getElementById("passwordId")
-  console.log("nappia painoit")
+  
   
   fetch("/api/user/login",{
     method: "POST",
@@ -27,7 +27,7 @@ function onSubmit(event){
     .then(response => response.json())
     .then((data) =>{
       if(data.token){
-        storeToken(data.token);
+        storeToken(data.token)
         window.location.href="/";
   
       }else {
@@ -37,7 +37,6 @@ function onSubmit(event){
           console.log("strange error")
         }
       }
-
 
     }) 
     

@@ -15,16 +15,16 @@ const validateToken = require("../auth/validation.js")
 router.use(express.json());
 router.use(bodyParser.json())
 /* GET users listing. */
-router.get('/', (req, res, next) => {
+/* router.get('/', (req, res, next) => {
   //res.send("terve")
   res.render("register")
-});
+}); */
 
 
 router.get('/private', validateToken, (req, res, next) => {
   
-  res.send({email: req.body.email})
-  //res.send('Tämä on tosi salainen jutska');
+  res.send(req.email.email)
+  
 });
 
 //Login
@@ -37,7 +37,7 @@ router.post('/user/login',
       throw err
     }
     if(!user){
-      return res.status(403).json({error: "Login failed."});
+      return res.status(403).send("Indavalid credentials");
     } else {
 
       bcrypt.compare(req.body.password, user.password,(err,match)=>{
@@ -83,7 +83,7 @@ router.post("/user/register",
       throw err;
     };  
     if(user){
-      return res.status(403).json({email: "Email already in use."});
+      return res.status(403).send("Email already in use");
     }else {
       bcrypt.genSalt(10,(err, salt)=>{
         bcrypt.hash(req.body.password, salt, (err, hash)=>{

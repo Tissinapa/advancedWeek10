@@ -7,7 +7,6 @@ if (document.readyState !== "loading") {
   }
   
   function initializeCodeLogin() {
-    console.log("toimii login")
     document.getElementById("login-form").addEventListener("submit", onSubmit);
 }
 

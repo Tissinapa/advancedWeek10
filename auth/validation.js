@@ -12,6 +12,7 @@ module.exports = function(req,res,next){
     jwt.verify(token , process.env.SECRET, (err,email)=>{
         if(err)return res.sendStatus(401)
         req.email = email
+        //console.log(req.email)
         next()
     })
 
