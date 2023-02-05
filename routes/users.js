@@ -37,7 +37,7 @@ router.post('/user/login',
       throw err
     }
     if(!user){
-      return res.send("Invalid credentials");
+      return res.json({message:"Invalid credentials"})
     } else {
 
       bcrypt.compare(req.body.password, user.password,(err,match)=>{
